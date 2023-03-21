@@ -1,11 +1,11 @@
 Model Information:
-* title:	Trapped (animated)
-* source:	https://sketchfab.com/3d-models/trapped-animated-26009ae82e8c4211978de4e4d892f5e7
-* author:	ConradJustin (https://sketchfab.com/ConradJustin)
+* title:	Sonic HD FULL RIGGED
+* source:	https://sketchfab.com/3d-models/sonic-hd-full-rigged-65cc641a3adf42468641cc208a858187
+* author:	Electrogamer777 (https://sketchfab.com/Electrogamer777)
 
 Model License:
 * license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
 * requirements:	Author must be credited. Commercial use is allowed.
 
 If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
-This work is based on "Trapped (animated)" (https://sketchfab.com/3d-models/trapped-animated-26009ae82e8c4211978de4e4d892f5e7) by ConradJustin (https://sketchfab.com/ConradJustin) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+This work is based on "Sonic HD FULL RIGGED" (https://sketchfab.com/3d-models/sonic-hd-full-rigged-65cc641a3adf42468641cc208a858187) by Electrogamer777 (https://sketchfab.com/Electrogamer777) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
