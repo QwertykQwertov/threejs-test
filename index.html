@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>First Three.js app</title>
+    <style>
+        * {margin:0;padding:0;}
+
+        body {overflow-x: hidden;}
+
+        .container {width: 800px; height: 500px;}
+    </style>
+    <script src="three.js"></script>
+  </head>
+  <body style="background:#581845; padding-top: 20px;">
+    <h1 style="text-align: center;" >Test ThreeJs by Kolesov Ivan</h1>
+    <div class="container"></div>
+    <h1 style="text-align: center;" >For Artydev</h1>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.139.0/build/three.module.js",
+                "OrbitControls": "https://unpkg.com/three@0.139.0/examples/jsm/controls/OrbitControls.js",
+                "GLTFLoader": "https://unpkg.com/three@0.139.0/examples/jsm/loaders/GLTFLoader.js",
+                "RectAreaLightHelper": "https://unpkg.com/three@0.139.0/examples/jsm/helpers/RectAreaLightHelper.js",
+                "RectAreaLightUniformsLib": "https://unpkg.com/three@0.139.0/examples/jsm/lights/RectAreaLightUniformsLib.js"
+            }
+        }
+    </script>
+    <script type="module">
+
+        import * as THREE from 'three';
+        import { OrbitControls } from 'OrbitControls';
+        import { GLTFLoader } from 'GLTFLoader';
+        import { RectAreaLightHelper } from 'RectAreaLightHelper'
+        import { RectAreaLightUniformsLib } from 'RectAreaLightUniformsLib';
+
+        function init() {
+            let container = document.querySelector('.container');
+
+            //Scene
+            const scene = new THREE.Scene()
+            scene.background = new THREE.Color("#581845");
+
+            //Camera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 3000);
+            // const camera = new THREE.PerspectiveCamera(75, 800 / 800, 0.1, 3000);
+            // camera.position.set(0, 0.5, 1)
+            camera.position.set(5, 3, 8)
+
+            //render
+            const renderer = new THREE.WebGLRenderer({antialias: true})
+            renderer.setSize(window.innerWidth, window.innerHeight)
+            container.appendChild(renderer.domElement)
+
+            let plain;
+            {
+                plain = new THREE.Mesh(
+                    new THREE.PlaneGeometry(1000, 1000),
+                    new THREE.MeshBasicMaterial({color: "#581845"})
+                )
+                plain.reciveShadow = true;
+                plain.position.set(0, -1, 0)
+                plain.rotateX(-Math.PI / 2);
+                scene.add(plain)
+            }
+
+            // Model
+            {
+                const loader = new GLTFLoader();
+                loader.load('./model/scene.gltf', gltf => {
+                scene.add(gltf.scene);
+                }, 
+                    function (error) {
+                        console.log('Error: ' + error)
+                    }
+                )
+            }
+            
+            {
+                const light = new THREE.DirectionalLight(0xffffff, 1)
+                light.position.set(-2, 0, 10)
+                light.lookAt(0, -1, 0)
+                scene.add(light)
+
+                // Helper
+                // const helper = new THREE.DirectionalLightHelper(light, 5)
+                // scene.add(helper)
+            }
+
+            {
+                const light = new THREE.DirectionalLight(0xffffff, 1)
+                light.position.set(2, 0, 5)
+                light.lookAt(0, 1, 0)
+                scene.add(light)
+
+                // Helper
+                // const helper = new THREE.DirectionalLightHelper(light, 5)
+                // scene.add(helper)
+            }
+
+            RectAreaLightUniformsLib.init();
+            {
+                const rectLight = new THREE.RectAreaLight(0xffffff, 1, 100, 100);
+                rectLight.position.set(-10,0,0)
+                rectLight.rotation.y = Math.PI + Math.PI/4;
+                scene.add(rectLight)
+            }
+
+            {
+                const rectLight = new THREE.RectAreaLight(0xffffff, 1, 100, 100);
+                rectLight.position.set(10,0,0)
+                rectLight.rotation.y = Math.PI - Math.PI/4;
+                scene.add(rectLight)
+            }
+            
+            //OrbitControls
+            const controls = new OrbitControls(camera, renderer.domElement);
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 5;
+            controls.enableDamping = true;
+
+            //Resize
+            window.addEventListener('resize', onWindowResize, false)
+            
+            function onWindowResize() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+
+                renderer.setSize(window.innerWidth, window.innerHeight)
+            }
+
+            // Animate
+            function animate() {
+                requestAnimationFrame(animate)
+                controls.update();
+                renderer.render(scene, camera)
+            }
+            animate()
+
+        }
+
+        init()
+    </script>
+    <!-- <script>
+      // Добавляем сцену
+      var scene = new THREE.Scene();
+
+      //   Добавляем перспективную камеру
+      var camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+
+      // Добавляем и настраиваем рендер
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      // Создание геометрии
+      var geometry = new THREE.BoxGeometry(10, 10, 10); // x,y,z
+      //   задаем материал
+      var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+
+      var cube = new THREE.Mesh(geometry, material);
+      scene.add(cube);
+
+      camera.position.z = 25;
+
+      function render() {
+        requestAnimationFrame(render);
+        cube.rotation.x += 0.01;
+        cube.rotation.y += 0.01;
+        renderer.render(scene, camera);
+      }
+      render();
+    </script> -->
+  </body>
+</html>
